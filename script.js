@@ -43,26 +43,27 @@ const qsa = (selector, scope = document) => [...scope.querySelectorAll(selector)
     } else {
       navbar.classList.remove('scrolled');
     }
+  };
 
-    // Active nav link highlight
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 120;
-      if (window.scrollY >= sectionTop) {
-        current = section.getAttribute('id');
-      }
-    });
-
+  // Active nav link highlight based on path
+  const highlightActiveLink = () => {
+    const path = window.location.pathname;
     allLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const normalizedPath = path.replace(/\/$/, '') || '/';
+      const normalizedHref = href.replace(/\/$/, '') || '/';
+      if (normalizedHref === normalizedPath) {
         link.classList.add('active');
+      } else {
+        link.classList.remove('active');
       }
     });
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll(); // run once on load
+  highlightActiveLink(); // run once on load
 
   // Hamburger toggle
   hamburger.addEventListener('click', () => {

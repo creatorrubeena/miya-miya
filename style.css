@@ -2127,10 +2127,51 @@ button {
 @media (max-width: 768px) {
   .faq-toggle {
     padding: 1.25rem 1.5rem;
-    font-size: 0.98rem;
   }
   .faq-content {
     padding: 0 1.5rem 1.25rem;
   }
 }
+
+/* ============================================================
+   28. BREADCRUMBS
+   ============================================================ */
+.breadcrumb-container {
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-ivory-dark);
+  padding: 1rem 2rem;
+}
+
+.breadcrumb-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.breadcrumb-wrap a {
+  color: var(--color-warm-grey);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+.breadcrumb-wrap a:hover {
+  color: var(--color-gold);
+}
+
+.breadcrumb-separator {
+  color: rgba(117,107,96,0.4);
+  font-size: 0.75rem;
+}
+
+.breadcrumb-current {
+  color: var(--color-espresso);
+  font-weight: 600;
+}
+
 

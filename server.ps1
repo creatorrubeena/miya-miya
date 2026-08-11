@@ -68,8 +68,13 @@ while ($listener.IsListening) {
             $response.OutputStream.Write($bytes, 0, $bytes.Length)
             Write-Host "  200  $urlPath" -ForegroundColor Green
         } else {
-            $bodyText = "<html><body style='font-family:sans-serif;padding:2rem;background:#F5F0E8'><h2 style='color:#17130F'>404 Not Found</h2><p><code>" + $urlPath + "</code></p><a href='/' style='color:#B08D57'>Back to Home</a></body></html>"
-            $bytes = [System.Text.Encoding]::UTF8.GetBytes($bodyText)
+            $errPath = Join-Path $root "404.html"
+            $bytes = if (Test-Path $errPath -PathType Leaf) {
+                [System.IO.File]::ReadAllBytes($errPath)
+            } else {
+                $bodyText = "<html><body style='font-family:sans-serif;padding:2rem;background:#F5F0E8'><h2 style='color:#17130F'>404 Not Found</h2><p><code>" + $urlPath + "</code></p><a href='/' style='color:#B08D57'>Back to Home</a></body></html>"
+                [System.Text.Encoding]::UTF8.GetBytes($bodyText)
+            }
             $response.StatusCode = 404
             $response.ContentType = "text/html; charset=utf-8"
             $response.ContentLength64 = $bytes.Length
