@@ -458,3 +458,42 @@ document.getElementById('reservation-form')?.addEventListener('submit', () => {
   });
 });
 */
+
+// ============================================================
+// 13. FAQ ACCORDION INTERACTION
+// ============================================================
+(function initFaqAccordion() {
+  const toggles = qsa('.faq-toggle');
+  if (!toggles.length) return;
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      const content = toggle.nextElementSibling;
+      const icon = toggle.querySelector('.faq-icon');
+
+      // Toggle state
+      toggle.setAttribute('aria-expanded', !expanded);
+      content.hidden = expanded;
+
+      if (!expanded) {
+        icon.textContent = '－';
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        icon.textContent = '＋';
+        content.style.maxHeight = '0px';
+      }
+      
+      // Optional: close other open items
+      toggles.forEach(otherToggle => {
+        if (otherToggle !== toggle && otherToggle.getAttribute('aria-expanded') === 'true') {
+          otherToggle.setAttribute('aria-expanded', 'false');
+          otherToggle.nextElementSibling.hidden = true;
+          otherToggle.nextElementSibling.style.maxHeight = '0px';
+          otherToggle.querySelector('.faq-icon').textContent = '＋';
+        }
+      });
+    });
+  });
+})();
+
