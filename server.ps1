@@ -1,4 +1,4 @@
-﻿$port = 3000
+$port = 3000
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $prefix = "http://localhost:$port/"
 
@@ -47,6 +47,12 @@ while ($listener.IsListening) {
         if ($urlPath -eq "/" -or $urlPath -eq "") { $urlPath = "/index.html" }
         $filePath = Join-Path $root ($urlPath.TrimStart("/").Replace("/", "\"))
         $filePath = [System.IO.Path]::GetFullPath($filePath)
+        
+        # If the path points to a directory, look for index.html inside it
+        if (Test-Path $filePath -PathType Container) {
+            $filePath = Join-Path $filePath "index.html"
+        }
+        
         if (-not $filePath.StartsWith($root)) {
             $response.StatusCode = 403
             $response.Close()
