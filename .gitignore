@@ -13,3 +13,6 @@ Desktop.ini
 
 # Local log files
 *.log
+
+# Local binaries and downloads
+libwebp/
